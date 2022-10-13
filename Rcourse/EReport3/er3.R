@@ -46,3 +46,45 @@ names(data2) <- c("无效", "好转", "治愈")
 barplot(data2, space = 0.5, col = c("red","green","blue"))
 ## ggplot2
 ggplot(data1, aes(效果))+geom_bar(aes(fill=效果))
+
+
+# problem 4
+## graphics
+# 4.1
+hist(mtcars$mpg)
+# 4.2
+hist(mtcars$mpg,breaks = 12, col = "blue", border = "red")
+# 4.3
+dotchart(mtcars$mpg,labels = row.names(mtcars))
+
+# 4.4
+x<-mtcars[order(mtcars$mpg),]
+x$cyl<-factor(x$cyl)
+x$color[x$cyl==4]<-"red"
+x$color[x$cyl==6]<-"blue"
+x$color[x$cyl==8]<-"darkgreen"
+dotchart(x$mpg,labels=row.names(x),groups=x$cyl,gcolor="black",color=x$color)
+
+
+## ggplot2
+ggplot(mtcars, aes(mpg))+geom_histogram(bins = 12)
+
+ggplot(mtcars, aes(mpg))+
+        geom_histogram(bins = 12, color ="red",fill="#4169E1")
+ggplot(mtcars, aes(x=mpg,y = row.names(mtcars)))+
+        geom_point()+theme(axis.title.y = element_blank())
+ggplot(mtcars, aes(x=mpg,y = row.names(mtcars), color = as.factor(cyl)))+
+        geom_point()+theme(axis.title.y = element_blank())
+
+
+# problem 5
+## graphics
+coplot(Sepal.Length~Sepal.Width | Petal.Length * Petal.Width,data = iris)
+
+## ggplot2
+ggplot(iris, aes(Sepal.Length, Sepal.Width))+geom_point() +
+        facet_grid(. ~ Species)
+
+ggplot(iris, aes(Petal.Length, Petal.Width))+geom_point() +
+        facet_grid(. ~ Species)
+
